@@ -1,0 +1,17 @@
+{
+    "truncate_path_folders": 2,
+    "separator": " ❯ ",
+    
+    "path_color": "Cyan",
+    "separator_color": "White",
+    "HelpTitleColor": "Yellow",
+    "HelpSubTitleColor": "White",
+    "HelpCommandColor": "DarkGray",
+    "ErrorColor": "Red",
+
+    "AITittle": "Cyan",
+    "AIContent": "Green",
+
+
+    "hint_enabled": false
+}
