@@ -217,7 +217,7 @@ function Run-Terminal {
 
             # Show the response
             if ($response) {
-                Write-Host "`n🤖: " -ForegroundColor ($config.AITittle) -NoNewline
+                Write-Host "`n`n🤖: " -ForegroundColor ($config.AITittle) -NoNewline    
                 Write-Host $response -ForegroundColor ($config.AIContent)
                 
                 # Log the query and response
@@ -239,7 +239,6 @@ function Run-Terminal {
             } catch {
                 Write-Host "❌ Error executing the command: " -ForegroundColor ($config.ErrorColor) -NoNewline
                 Write-Host $inputCommand -ForegroundColor ($config.ErrorColor)
-                Write-Host "`n" $_.Exception.Message
 
                 # Log the error
                 $errorLog = "ERROR: " + $inputCommand + " | " + $_.Exception.Message
