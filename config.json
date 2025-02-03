@@ -1,9 +1,10 @@
 {
-    "truncate_path_folders": 2,
+    "TruncatePathFolders": 2,
     "separator": " ❯ ",
     
-    "path_color": "Cyan",
-    "separator_color": "White",
+    "PathColor": "Cyan",
+    "DecorationColor": "DarkGray",
+    "SeparatorColor": "White",
     "HelpTitleColor": "Yellow",
     "HelpSubTitleColor": "White",
     "HelpCommandColor": "DarkGray",
@@ -12,6 +13,9 @@
     "AITittle": "Cyan",
     "AIContent": "Green",
 
+    "NewLine": true,
+    "ShowPath": true,
 
-    "hint_enabled": false
+
+    "hint_enabled": true
 }

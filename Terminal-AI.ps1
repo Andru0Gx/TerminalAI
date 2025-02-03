@@ -107,12 +107,26 @@ $config = Load-Config
 # Main function: Interactive terminal
 function Run-Terminal {
     while ($true) {
-        # Get the truncated path according to the configuration
-        $currentPath = Get-TruncatedPath -path (Get-Location).Path -truncateFolders $config.truncate_path_folders 
+        Write-Host "`n|  " -NoNewline -foregroundColor ($config.DecorationColor)
 
-        # Prompt user for input
-        Write-Host "`n $currentPath " -NoNewline -ForegroundColor ($config.path_color)
-        Write-Host $config.separator -NoNewline -ForegroundColor ($config.separator_color)
+        # Get the truncated path according to the configuration
+        if ($config.TruncatePathFolders -eq 0) {
+            $currentPath = " 📂 "
+        } else {
+            $currentPath = Get-TruncatedPath -path (Get-Location).Path -truncateFolders $config.TruncatePathFolders
+        }
+
+        # Show the current path
+        if ($config.ShowPath -eq $true) {
+            Write-Host "$currentPath" -NoNewline -ForegroundColor ($config.PathColor)
+        }
+
+        if ($config.NewLine -eq $true) {
+            Write-Host "`n|" -foregroundColor ($config.DecorationColor)
+            Write-Host "|" -NoNewline -foregroundColor ($config.DecorationColor)
+        }
+
+        Write-Host $config.separator -NoNewline -ForegroundColor ($config.SeparatorColor)
         $inputCommand =  Read-Host
 
         # Exit if the user types 'exit' or presses Ctrl+C
@@ -137,8 +151,8 @@ function Run-Terminal {
 
             # Show the response
             if ($response) {
-                Write-Host "`n🤖 Gemini:" -ForegroundColor ($config.AITittle) -NoNewline
-                Write-Host $response -ForegroundColor ($config.AIContent)
+                Write-Host "`n🤖: " -ForegroundColor ($config.AITittle) -NoNewline
+                Write-Host $response -ForegroundColor ($config.AIContent)       
             }
         } else {
             # Execute other commands directly in the terminal
@@ -156,6 +170,6 @@ function Run-Terminal {
 
 # Start the terminal
 if ($config.hint_enabled) {
-    Write-Host "🔮 Terminal AI activated (use '!command' for queries)" -ForegroundColor ($config.path_color)
+    Write-Host "🚀 AI Terminal: Use '! <Question>' for queries" -ForegroundColor ($config.PathColor)
 }
 Run-Terminal
