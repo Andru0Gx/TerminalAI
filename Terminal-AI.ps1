@@ -1,3 +1,18 @@
+# Load the .env file
+$envPath = Join-Path $PSScriptRoot ".env"
+if (Test-Path $envPath) {
+    Get-Content $envPath | ForEach-Object {
+        if ($_ -match "^\s*([^=]+)=(.*)") {
+            $name = $matches[1].Trim()
+            $value = $matches[2].Trim()
+            [System.Environment]::SetEnvironmentVariable($name, $value)
+        }
+    }
+} else {
+    Write-Host "Error: Archivo .env no encontrado." -ForegroundColor Red
+    exit 1
+}
+
 # Gemini API Key
 $API_KEY = $env:GEMINI_API_KEY
 
