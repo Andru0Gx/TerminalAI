@@ -171,6 +171,17 @@ function Run-Terminal {
             }
         }
 
+        # Show the UserName
+        if ($config.ShowUserName -eq $true) {
+
+            if ($config.Username -ne "") {
+                Write-Host $config.Username  -NoNewline -ForegroundColor ($config.UserNameColor)
+                Write-Host -NoNewline " "
+            } else {
+                Write-Host "$env:USERNAME " -NoNewline -ForegroundColor ($config.UserNameColor)
+            }
+        }
+
         # Show the current path
         if ($config.ShowPath -eq $true) {
             Write-Host "$currentPath" -NoNewline -ForegroundColor ($config.PathColor)

@@ -1,7 +1,10 @@
 {
     "TruncatePathFolders": 2,
     "separator": " ❯ ",
+
+    "Username": "",
     
+    "UsernameColor": "Magenta",
     "PathColor": "Cyan",
     "DecorationColor": "DarkGray",
     "SeparatorColor": "White",
@@ -20,6 +23,7 @@
     "NewLine": true,
     "ShowBattery": true,
     "ShowPath": true,
+    "ShowUsername": true,
 
     "Log" : false,
     "AILogHistory": 5,
