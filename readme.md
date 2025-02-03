@@ -51,17 +51,30 @@ TerminalAI is a PowerShell-based interactive terminal that integrates with the G
 
 The [config.json](./config.json) file allows you to customize various aspects of the terminal:
 
-- `truncate_path_folders`: Number of folders to display in the truncated path.
+- `TruncatePathFolders`: Number of folders to display in the truncated path.
 - `separator`: Separator between the path and the input prompt.
-- `path_color`: Color of the path.
-- `separator_color`: Color of the separator.
+- `Username`: Username to display in the prompt.
+- `UsernameColor`: Color of the username.
+- `PathColor`: Color of the path.
+- `DecorationColor`: Color of the decorations.
+- `SeparatorColor`: Color of the separator.
 - `HelpTitleColor`: Color of the help title.
 - `HelpSubTitleColor`: Color of the help subtitles.
 - `HelpCommandColor`: Color of the help commands.
 - `ErrorColor`: Color of error messages.
+- `BatteryFullColor`: Color of the battery indicator when full.
+- `BatteryMidColor`: Color of the battery indicator when mid-level.
+- `BatteryLowColor`: Color of the battery indicator when low.
 - `AITittle`: Color of the AI title.
 - `AIContent`: Color of the AI content.
+- `NewLine`: Enable or disable new line before the prompt.
+- `ShowBattery`: Enable or disable the battery status display
+- `ShowPath`: Enable or disable the path display.
+- `ShowUsername`: Enable or disable the username display.
+- `Log`: Enable or disable logging.
+- `AILogHistory`: Number of the log history to send to the AI (Only works if `Log` is enabled). 
 - `hint_enabled`: Enable or disable the hint message at startup.
+- `InstructionAI`: Instruction for the AI (This way you can change the behavior of the AI).
 
 ## Run on Terminal Startup
 
