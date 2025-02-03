@@ -10,10 +10,15 @@
     "HelpCommandColor": "DarkGray",
     "ErrorColor": "Red",
 
+    "BatteryFullColor": "Green",
+    "BatteryMidColor": "Yellow",
+    "BatteryLowColor": "Red",
+
     "AITittle": "Cyan",
     "AIContent": "Green",
 
     "NewLine": true,
+    "ShowBattery": true,
     "ShowPath": true,
 
 

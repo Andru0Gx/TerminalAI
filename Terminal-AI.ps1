@@ -33,6 +33,19 @@ function Load-Config {
     }
 }
 
+
+# Function to get the Battery Status
+function Get-BatteryStatus {
+    $battery = Get-WmiObject -Class Win32_Battery
+    if ($battery) {
+        $status = $battery.EstimatedChargeRemaining
+        $status = [math]::Round($status, 0)
+        return $status
+    } else {
+        return $null
+    }
+}
+
 # Function to truncate the path according to the configuration
 function Get-TruncatedPath {
     param (
@@ -114,6 +127,20 @@ function Run-Terminal {
             $currentPath = " 📂 "
         } else {
             $currentPath = Get-TruncatedPath -path (Get-Location).Path -truncateFolders $config.TruncatePathFolders
+        }
+
+        # Get the Battery Status
+        $batteryStatus = Get-BatteryStatus
+
+        # Show the battery status if available and if  showbattery is true
+        if ($batteryStatus -and $config.ShowBattery -eq $true) {
+            if ($batteryStatus -lt 20) {
+                Write-Host "󰁻 $batteryStatus% " -ForegroundColor ($config.BatteryLowColor) -NoNewline
+            } elseif ($batteryStatus -lt 50) {
+                Write-Host "󰁾 $batteryStatus% " -ForegroundColor ($config.BatteryMidColor) -NoNewline
+            } else {
+                Write-Host "󰁹 $batteryStatus% " -ForegroundColor ($config.BatteryFullColor) -NoNewline
+            }
         }
 
         # Show the current path
