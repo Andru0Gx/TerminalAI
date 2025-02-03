@@ -21,6 +21,12 @@
     "ShowBattery": true,
     "ShowPath": true,
 
+    "Log" : false,
+    "AILogHistory": 5,
 
-    "hint_enabled": true
+
+    "hint_enabled": true,
+
+
+    "InstructionAI": "PowerShell Assistant: Concise answers, essential info only. Use Help for commands or Exit to close. Responses match your language."
 }

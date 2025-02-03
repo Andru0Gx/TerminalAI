@@ -13,6 +13,8 @@ if (Test-Path $envPath) {
     exit 1
 }
 
+$LogPath = Join-Path $PSScriptRoot "TerminalLog.txt"
+
 # Gemini API Key
 $API_KEY = $env:GEMINI_API_KEY
 
@@ -76,6 +78,16 @@ function Show-Help {
     Write-Host "      Config.json  - Customize the terminal behavior." -ForegroundColor ($config.HelpCommandColor)
 }
 
+# get the last lines of the log file
+function Get-Log {
+    if ($config.Log -eq $false) {
+        return $null
+    }
+
+    $log = Get-Content -Path $LogPath -Tail $config.AILogHistory
+    return $log
+}
+
 # Function to call the Gemini API
 function Call-GeminiAPI {
     param (
@@ -83,10 +95,15 @@ function Call-GeminiAPI {
     )
 
     # Full URL with endpoint and API key
-    $FULL_URI = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=$API_KEY"
+    $FULL_URI = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=$API_KEY"
 
     # Build the JSON body
     $JSON_BODY = @{
+        system_instruction = @{
+            parts = @{
+                text = $config.InstructionAI + "This are the commands executed in the terminal: " + (Get-Log -join " ")
+            }
+        }
         contents = @(
             @{
                 parts = @(
@@ -113,6 +130,17 @@ function Call-GeminiAPI {
         return $null
     }
 }
+
+function add-log {
+    param (
+        [string]$log
+    )
+    if ($config.Log -eq $true) {
+        # Save the log
+        Add-Content -Path $LogPath -Value $log
+    }
+}
+
 
 # Load the configuration
 $config = Load-Config
@@ -179,16 +207,35 @@ function Run-Terminal {
             # Show the response
             if ($response) {
                 Write-Host "`n🤖: " -ForegroundColor ($config.AITittle) -NoNewline
-                Write-Host $response -ForegroundColor ($config.AIContent)       
+                Write-Host $response -ForegroundColor ($config.AIContent)
+                
+                # Log the query and response
+                $log = $prompt + " | " + $response
+                # Save the log
+                add-log -log $LogPath  
             }
         } else {
             # Execute other commands directly in the terminal
             try {
                 # Execute the command
                 Invoke-Expression $inputCommand
+
+                # Log the command
+                $log = (Get-Date).ToString() + " | " + $inputCommand
+
+                # Save the log
+                add-log -log $log
             } catch {
                 Write-Host "❌ Error executing the command: " -ForegroundColor ($config.ErrorColor) -NoNewline
                 Write-Host $inputCommand -ForegroundColor ($config.ErrorColor)
+                Write-Host "`n" $_.Exception.Message
+
+                # Log the error
+                $errorLog = "ERROR: " + $inputCommand + " | " + $_.Exception.Message
+
+                # Save the log
+                add-log -log $errorLog
+
                 Write-Host "`n" $_.Exception.Message
             }
         }
